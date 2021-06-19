@@ -1,6 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_cart/injections/injections.dart' as di;
+import 'package:shopping_cart/ui/pages/home/home_page.dart';
+import 'package:shopping_cart/ui/routes.dart';
+
+import 'features/product/infrastructure/request/product_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,20 +26,15 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Material App',
-              home: Scaffold(
-                appBar: AppBar(
-                  title: Text('Material App Bar'),
-                ),
-                body: Center(
-                  child: Container(
-                    child: Text('Hello World'),
-                  ),
-                ),
-              ),
-            );
+            return MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (_) => di.sl<ProductBloc>()),
+                ],
+                child: MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    title: 'Material App',
+                    initialRoute: HomePage.NAME,
+                    routes: routes));
           }
 
           // TODO: Crear vista cuando se esta cargando
