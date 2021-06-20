@@ -5,7 +5,9 @@ import 'package:shopping_cart/injections/injections.dart' as di;
 import 'package:shopping_cart/ui/pages/home/home_page.dart';
 import 'package:shopping_cart/ui/routes.dart';
 
-import 'features/product/infrastructure/request/product_bloc.dart';
+import 'features/file/infrastructure/file/file_bloc.dart';
+import 'features/product/infrastructure/product/bloc.dart';
+import 'features/product/infrastructure/product_manager/product_manager_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +23,6 @@ class MyApp extends StatelessWidget {
         future: _initialization,
         builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
           if (snapshot.hasError) {
-            // TODO: Crear vista cuando hay errores en la inicializacion
             return Container();
           }
 
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
             return MultiBlocProvider(
                 providers: [
                   BlocProvider(create: (_) => di.sl<ProductBloc>()),
+                  BlocProvider(create: (_) => di.sl<ProductManagerBloc>()),
+                  BlocProvider(create: (_) => di.sl<FileBloc>()),
                 ],
                 child: MaterialApp(
                     debugShowCheckedModeBanner: false,
@@ -37,7 +40,6 @@ class MyApp extends StatelessWidget {
                     routes: routes));
           }
 
-          // TODO: Crear vista cuando se esta cargando
           return Container();
         });
   }

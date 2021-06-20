@@ -5,7 +5,7 @@ import 'package:shopping_cart/core/error/failures.dart';
 import 'package:shopping_cart/features/file/data/datasources/file_data_source.dart';
 import 'package:shopping_cart/features/file/domain/repositories/file_repository.dart';
 
-typedef Future<List<String>> _FilesChooser();
+typedef _FilesChooser = Future<List<String>> Function();
 
 class FileRepositoryImpl implements FileRepository {
   final FileDataSource fileDataSource;

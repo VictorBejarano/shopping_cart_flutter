@@ -2,10 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_cart/features/product/infrastructure/request/product_bloc.dart';
-import 'package:shopping_cart/features/product/infrastructure/request/product_event.dart';
-import 'package:shopping_cart/features/product/infrastructure/request/product_state.dart';
-import 'package:shopping_cart/ui/pages/product_creator/product_creator_page.dart';
+import 'package:shopping_cart/features/product/infrastructure/product/bloc.dart';
 import 'package:shopping_cart/ui/pages/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {

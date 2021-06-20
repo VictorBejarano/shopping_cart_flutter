@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:shopping_cart/core/error/failures.dart';
-import 'package:shopping_cart/core/network/network_info.dart';
 import 'package:shopping_cart/features/product/data/datasources/product_data_source.dart';
 import 'package:shopping_cart/features/product/domain/entities/product.dart';
 import 'package:shopping_cart/features/product/domain/repositories/product_repositoy.dart';
 
-typedef Stream<List<Product>> _ListProductChooser();
+typedef _ListProductChooser = Stream<List<Product>> Function();
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductDataSource productDataSource;
