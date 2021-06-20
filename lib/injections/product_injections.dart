@@ -16,12 +16,11 @@ Future<void> productDI() async {
   // Repository
   sl.registerLazySingleton<ProductRepository>(
     () {
-      return ProductRepositoryImpl(productDataSource: sl(), networkInfo: sl());
+      return ProductRepositoryImpl(productDataSource: sl());
     },
   );
   // Data sources
   sl.registerLazySingleton<ProductDataSource>(
     () => ProductDataSourceImpl(firebase: sl()),
   );
-  //! Core
 }

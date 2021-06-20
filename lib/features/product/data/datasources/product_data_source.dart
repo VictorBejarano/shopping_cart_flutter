@@ -19,8 +19,16 @@ class ProductDataSourceImpl implements ProductDataSource {
   }
 
   Stream<List<ProductModel>> _getAllProductsFromFirebase() async* {
-    yield* firebase.collection('products').orderBy('id').snapshots().map(
-        (products) => products.docs
-            .map((product) => ProductModel.fromJson(product.data())));
+    yield* firebase
+        .collection('products')
+        .orderBy('id')
+        .snapshots()
+        .map((products) => products.docs
+            .map((product) => ProductModel.fromJson({
+                  ...product.data(),
+                  'fecha_creacion':
+                      (product.data()['fecha_creacion'] as Timestamp).toDate()
+                }))
+            .toList());
   }
 }

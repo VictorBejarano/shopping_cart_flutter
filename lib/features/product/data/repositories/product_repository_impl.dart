@@ -10,10 +10,8 @@ typedef Stream<List<Product>> _ListProductChooser();
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductDataSource productDataSource;
-  final NetworkInfo networkInfo;
 
-  ProductRepositoryImpl(
-      {@required this.networkInfo, @required this.productDataSource});
+  ProductRepositoryImpl({@required this.productDataSource});
 
   @override
   Stream<Either<Failure, List<Product>>> getAllProducts() async* {

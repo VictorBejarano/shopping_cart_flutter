@@ -6,11 +6,15 @@ class ProductModel extends Product {
     @required String id,
     @required String name,
     @required String sku,
+    @required String photoUrl,
+    @required DateTime creationDate,
     @required String description,
   }) : super(
           id: id,
           name: name,
           sku: sku,
+          photoUrl: photoUrl,
+          creationDate: creationDate,
           description: description,
         );
 
@@ -18,6 +22,8 @@ class ProductModel extends Product {
         id: json['id'],
         name: json['nombre'],
         sku: json['sku'],
+        photoUrl: json['foto_url'],
+        creationDate: json['fecha_creacion'],
         description: json['descripcion'],
       );
 
@@ -26,5 +32,7 @@ class ProductModel extends Product {
         'nombre': name,
         'sku': sku,
         'descripcion': description,
+        'fecha_creacion': creationDate,
+        'foto_url': photoUrl,
       };
 }
