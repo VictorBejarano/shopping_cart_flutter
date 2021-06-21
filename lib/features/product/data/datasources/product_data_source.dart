@@ -6,6 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 abstract class ProductDataSource {
   /// Throws a [ServerException] for all error codes.
   Stream<List<ProductModel>> getAllProducts();
+  Future<void> createProduct(
+    String name,
+    String sku,
+    String photoUrl,
+    String description,
+  );
 }
 
 class ProductDataSourceImpl implements ProductDataSource {
@@ -30,5 +36,27 @@ class ProductDataSourceImpl implements ProductDataSource {
                       (product.data()['fecha_creacion'] as Timestamp).toDate()
                 }))
             .toList());
+  }
+
+  @override
+  Future<void> createProduct(
+    String name,
+    String sku,
+    String photoUrl,
+    String description,
+  ) async {
+    try {
+      final ref = firebase.collection('products').doc();
+      final product = ProductModel(
+          id: ref.id,
+          creationDate: DateTime.now(),
+          name: name,
+          sku: sku,
+          description: description,
+          photoUrl: photoUrl);
+      return ref.set(product.toJson());
+    } catch (e) {
+      throw ServerException();
+    }
   }
 }

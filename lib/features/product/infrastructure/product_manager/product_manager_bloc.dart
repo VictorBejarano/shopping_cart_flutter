@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
 import 'package:dartz/dartz.dart';
 import 'package:shopping_cart/core/error/failures.dart';
+import 'package:shopping_cart/features/product/domain/usecase/create_product.dart';
 
 import 'bloc.dart';
 
@@ -12,7 +14,9 @@ const String INVALID_INPUT_FAILURE_MESSAGE =
 
 class ProductManagerBloc
     extends Bloc<ProductManagerEvent, ProductManagerState> {
-  ProductManagerBloc() : super(ProductManagerState());
+  final CreateProduct createProduct;
+  ProductManagerBloc({@required this.createProduct})
+      : super(ProductManagerState());
 
   @override
   Stream<ProductManagerState> mapEventToState(
@@ -20,6 +24,13 @@ class ProductManagerBloc
   ) async* {
     if (event is SetImageToUploadEvent) {
       yield state.copyWith(uploadImage: event.uploadImage);
+    } else if (event is CreateProductEvent) {
+      final failureOrSetState = await createProduct(Params(
+          name: event.name,
+          sku: event.sku,
+          photoUrl: event.photoUrl,
+          description: event.description));
+      yield* _eitherLoadedOrErrorState(failureOrSetState);
     }
   }
 

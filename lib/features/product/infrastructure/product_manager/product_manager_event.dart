@@ -19,3 +19,20 @@ class SetImageToUploadEvent extends ProductManagerEvent {
   @override
   List<Object> get props => [uploadImage];
 }
+
+class CreateProductEvent extends ProductManagerEvent {
+  final String name;
+  final String sku;
+  final String photoUrl;
+  final String description;
+
+  CreateProductEvent({
+    @required this.name,
+    @required this.sku,
+    @required this.photoUrl,
+    @required this.description,
+  });
+
+  @override
+  List<Object> get props => [name, sku, photoUrl, description];
+}
