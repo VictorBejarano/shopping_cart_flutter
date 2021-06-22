@@ -5,6 +5,7 @@ import 'package:shopping_cart/injections/injections.dart' as di;
 import 'package:shopping_cart/ui/pages/home/home_page.dart';
 import 'package:shopping_cart/ui/routes.dart';
 
+import 'features/cart/infrastructure/product/cart_bloc.dart';
 import 'features/file/infrastructure/file/file_bloc.dart';
 import 'features/product/infrastructure/product/bloc.dart';
 import 'features/product/infrastructure/product_manager/product_manager_bloc.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
                 providers: [
                   BlocProvider(create: (_) => di.sl<ProductBloc>()),
                   BlocProvider(create: (_) => di.sl<ProductManagerBloc>()),
+                  BlocProvider(create: (_) => di.sl<CartBloc>()),
                   BlocProvider(create: (_) => di.sl<FileBloc>()),
                 ],
                 child: MaterialApp(
