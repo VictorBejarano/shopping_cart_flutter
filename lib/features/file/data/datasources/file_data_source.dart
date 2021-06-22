@@ -23,17 +23,15 @@ class FileDataSourceImpl implements FileDataSource {
       String route, List<String> paths) async {
     try {
       var result = <String>[];
-      var counterPaths = 0;
       UploadTask uploadTask;
       for (var path in paths) {
-        final storageReference =
-            FirebaseStorage.instance.ref(route + '/image$counterPaths');
+        final storageReference = FirebaseStorage.instance.ref(
+            route + '/${DateTime.now().millisecondsSinceEpoch.toString()}');
         uploadTask = storageReference.putFile(File(path));
         await uploadTask.whenComplete(() async {
           final photoURL = await storageReference.getDownloadURL();
           result.add(photoURL);
         });
-        counterPaths++;
       }
       return result;
     } catch (e) {

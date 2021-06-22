@@ -31,8 +31,10 @@ class _ImageSelectPageState extends State<ImageSelectPage> {
               StadiumButton(
                 enabled: true,
                 onPressed: () async {
-                  final pickedFile =
-                      await picker.getImage(source: ImageSource.gallery);
+                  final pickedFile = await picker.getImage(
+                    source: ImageSource.gallery,
+                    maxWidth: 600.0,
+                  );
                   BlocProvider.of<ProductManagerBloc>(context).add(
                       SetImageToUploadEvent(
                           uploadImage: File(pickedFile.path)));
@@ -46,8 +48,10 @@ class _ImageSelectPageState extends State<ImageSelectPage> {
                   ? StadiumButton(
                       enabled: true,
                       onPressed: () async {
-                        final pickedFile =
-                            await picker.getImage(source: ImageSource.camera);
+                        final pickedFile = await picker.getImage(
+                          source: ImageSource.camera,
+                          maxWidth: 600.0,
+                        );
                         BlocProvider.of<ProductManagerBloc>(context).add(
                             SetImageToUploadEvent(
                                 uploadImage: File(pickedFile.path)));
