@@ -1,7 +1,8 @@
 part of 'widgets.dart';
 
 class ShoppingDrawer extends StatelessWidget {
-  const ShoppingDrawer({Key key}) : super(key: key);
+  final int quantity;
+  const ShoppingDrawer({Key key, @required this.quantity}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,19 @@ class ShoppingDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/${ProductCreatorPage.NAME}');
             },
-          )
+          ),
+          ListTile(
+            title: Badge(
+                alignment: Alignment.centerLeft,
+                position: BadgePosition.topStart(start: 110),
+                badgeContent: Text(
+                    (quantity < 100) ? quantity.toString() : '+99',
+                    style: TextStyle(color: Colors.white)),
+                child: Text('Carrito de compras')),
+            onTap: () {
+              Navigator.pushNamed(context, '/${CartPage.NAME}');
+            },
+          ),
         ],
       ),
     );

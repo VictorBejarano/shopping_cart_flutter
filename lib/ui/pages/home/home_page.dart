@@ -28,7 +28,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: ShoppingDrawer(),
+        drawer: ShoppingDrawer(
+          quantity: quantityProducts(),
+        ),
         appBar: AppBar(
           centerTitle: false,
           title: Text('Productos'),
@@ -132,5 +134,14 @@ class _HomePageState extends State<HomePage> {
             return SizedBox.shrink();
           },
         ));
+  }
+
+  int quantityProducts() {
+    final state = context.watch<cart_bloc.CartBloc>().state;
+    if (state is cart_bloc.Loaded) {
+      return state.products.length;
+    } else {
+      return 0;
+    }
   }
 }
