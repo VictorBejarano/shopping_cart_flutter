@@ -45,3 +45,5 @@ class DeleteProductEvent extends CartEvent {
   @override
   List<Object> get props => [index];
 }
+
+class BuyEvent extends CartEvent {}

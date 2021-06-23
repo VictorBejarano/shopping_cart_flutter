@@ -5,7 +5,9 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:shopping_cart/core/error/failures.dart';
 import 'package:shopping_cart/features/cart/domain/entities/product_quantity.dart';
-import 'package:shopping_cart/features/cart/domain/usecase/create_cart.dart';
+import 'package:shopping_cart/features/cart/domain/usecase/buy_products.dart';
+import 'package:shopping_cart/features/cart/domain/usecase/create_cart.dart'
+    as create_cart_usecase;
 
 import 'bloc.dart';
 
@@ -16,11 +18,15 @@ const String INVALID_INPUT_FAILURE_MESSAGE =
     'Invalid Input - The number must be a positive integer or zero.';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  final CreateCart createCart;
+  final create_cart_usecase.CreateCart createCart;
+  final BuyProducts buyProducts;
 
-  CartBloc({@required CreateCart cart})
+  CartBloc(
+      {@required create_cart_usecase.CreateCart cart,
+      @required BuyProducts buy})
       : assert(cart != null),
         createCart = cart,
+        buyProducts = buy,
         super(Empty());
 
   @override
@@ -29,8 +35,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   ) async* {
     if (event is CreateCartEvent) {
       final date = DateTime.now().millisecondsSinceEpoch.toString();
-      final failureOrSetState =
-          await createCart(Params(id: date, status: 'PENDIENTE'));
+      final failureOrSetState = await createCart(
+          create_cart_usecase.Params(id: date, status: 'PENDIENTE'));
       yield* _eitherLoadedOrErrorState(failureOrSetState, date);
     } else if (event is AddProductToCartEvent) {
       final loadedState = state as Loaded;
@@ -49,6 +55,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       var products = loadedState.products
           .where((product) => product != loadedState.products[event.index]);
       yield Loaded(id: loadedState.id, products: [...products]);
+    } else if (event is BuyEvent) {
+      final loadedState = state as Loaded;
+      final failureOrSetState = await buyProducts(
+          Params(id: loadedState.id, products: loadedState.products));
+      yield* _eitherLoadedOrErrorState(failureOrSetState, loadedState.id);
+      final failureOrSetStateCart = await createCart(
+          create_cart_usecase.Params(id: loadedState.id, status: 'COMPLETADO'));
+      yield* _eitherLoadedOrErrorState(failureOrSetStateCart, loadedState.id);
+      add(CreateCartEvent());
     }
   }
 

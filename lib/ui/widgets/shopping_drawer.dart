@@ -12,9 +12,12 @@ class ShoppingDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/image/wallpaper.jpeg')),
               color: Colors.blue,
             ),
-            child: Text('Drawer Header'),
+            child: Text('Shopping Cart', style: TextStyle(color: Colors.white)),
           ),
           ListTile(
             title: Text('Inicio'),

@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_cart/features/cart/domain/usecase/buy_products.dart';
 import 'package:shopping_cart/features/cart/infrastructure/product/bloc.dart';
 import 'package:shopping_cart/ui/styles/styles.dart';
 import 'package:shopping_cart/ui/widgets/widgets.dart';
@@ -24,7 +23,9 @@ class _CartPageState extends State<CartPage> {
             (context.watch<CartBloc>().state as Loaded).products.isNotEmpty,
         text: 'Comprar',
         width: 100,
-        onPressed: () {},
+        onPressed: () {
+          BlocProvider.of<CartBloc>(context).add(BuyEvent());
+        },
       ),
       appBar: AppBar(
         title: Text('Carrito de compras'),

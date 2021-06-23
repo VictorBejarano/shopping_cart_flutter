@@ -57,9 +57,12 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(
                               height: 15,
                             ),
-                            Image.network(
-                              state.products[index].photoUrl,
-                              fit: BoxFit.fitWidth,
+                            FadeInImage(
+                              image:
+                                  NetworkImage(state.products[index].photoUrl),
+                              placeholder:
+                                  AssetImage('assets/image/jar-loading.gif'),
+                              fadeInDuration: Duration(milliseconds: 200),
                             ),
                             SizedBox(
                               height: 8,

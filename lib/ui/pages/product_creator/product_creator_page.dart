@@ -125,7 +125,8 @@ class _ProductCreatorPageState extends State<ProductCreatorPage> {
                                         .path
                                   ]));
                             } else {
-                              log('No es valido');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Faltan datos')));
                             }
                           },
                           enabled: true)
