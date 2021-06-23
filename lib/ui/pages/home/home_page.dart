@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_cart/features/cart/infrastructure/product/bloc.dart'
     as cart_bloc;
 import 'package:shopping_cart/features/product/infrastructure/product/bloc.dart';
-import 'package:shopping_cart/ui/pages/styles/styles.dart';
-import 'package:shopping_cart/ui/pages/widgets/widgets.dart';
+import 'package:shopping_cart/ui/styles/styles.dart';
+import 'package:shopping_cart/ui/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   static const String NAME = 'home';
@@ -94,12 +94,13 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-                                (cartState.products
-                                        .where((product) =>
-                                            product == state.products[index])
-                                        .isEmpty)
-                                    ? TextButton(
-                                        onPressed: () {
+                                TextButton(
+                                  onPressed: (cartState.products
+                                          .where((item) =>
+                                              item.product ==
+                                              state.products[index])
+                                          .isEmpty)
+                                      ? () {
                                           BlocProvider.of<cart_bloc.CartBloc>(
                                                   context)
                                               .add(cart_bloc
@@ -110,18 +111,10 @@ class _HomePageState extends State<HomePage> {
                                               .read<cart_bloc.CartBloc>()
                                               .state
                                               .toString());
-                                        },
-                                        child: Text('Agregar al carrito'),
-                                      )
-                                    : TextButton(
-                                        onPressed: () {
-                                          log(context
-                                              .read<cart_bloc.CartBloc>()
-                                              .state
-                                              .toString());
-                                        },
-                                        child: Text('Borrar al carrito'),
-                                      ),
+                                        }
+                                      : null,
+                                  child: Text('Agregar al carrito'),
+                                ),
                                 SizedBox(width: 8),
                               ],
                             )

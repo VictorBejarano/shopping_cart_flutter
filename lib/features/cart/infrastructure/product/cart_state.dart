@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:shopping_cart/features/product/domain/entities/product.dart';
+import 'package:shopping_cart/features/cart/domain/entities/product_quantity.dart';
 
 abstract class CartState extends Equatable {
   const CartState();
@@ -14,7 +14,7 @@ class Empty extends CartState {}
 class Loading extends CartState {}
 
 class Loaded extends CartState {
-  final List<Product> products;
+  final List<ProductQuantity> products;
   final String id;
 
   Loaded({@required this.id, @required this.products});

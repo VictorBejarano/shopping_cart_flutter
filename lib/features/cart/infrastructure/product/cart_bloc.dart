@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 import 'package:shopping_cart/core/error/failures.dart';
+import 'package:shopping_cart/features/cart/domain/entities/product_quantity.dart';
 import 'package:shopping_cart/features/cart/domain/usecase/create_cart.dart';
 
 import 'bloc.dart';
@@ -33,9 +34,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* _eitherLoadedOrErrorState(failureOrSetState, date);
     } else if (event is AddProductToCartEvent) {
       final loadedState = state as Loaded;
-      yield Loaded(
-          id: loadedState.id,
-          products: [...loadedState.products, event.product]);
+      yield Loaded(id: loadedState.id, products: [
+        ...loadedState.products,
+        ProductQuantity(product: event.product, quantity: 1)
+      ]);
+    } else if (event is SetQuantityProductEvent) {
+      final loadedState = state as Loaded;
+      var products = [...loadedState.products];
+      products[event.index] = ProductQuantity(
+          product: products[event.index].product, quantity: event.quantity);
+      yield Loaded(id: loadedState.id, products: [...products]);
+    } else if (event is DeleteProductEvent) {
+      final loadedState = state as Loaded;
+      var products = loadedState.products
+          .where((product) => product != loadedState.products[event.index]);
+      yield Loaded(id: loadedState.id, products: [...products]);
     }
   }
 

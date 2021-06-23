@@ -10,7 +10,7 @@ import 'package:shopping_cart/features/product/infrastructure/product_manager/pr
 import 'package:shopping_cart/features/product/infrastructure/product_manager/product_manager_event.dart';
 import 'package:shopping_cart/features/product/infrastructure/product_manager/product_manager_state.dart';
 import 'package:shopping_cart/ui/pages/image_select/image_select_page.dart';
-import 'package:shopping_cart/ui/pages/widgets/widgets.dart';
+import 'package:shopping_cart/ui/widgets/widgets.dart';
 
 class ProductCreatorPage extends StatefulWidget {
   static const String NAME = 'product_creator';

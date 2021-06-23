@@ -21,3 +21,27 @@ class AddProductToCartEvent extends CartEvent {
   @override
   List<Object> get props => [product];
 }
+
+class SetQuantityProductEvent extends CartEvent {
+  final int index;
+  final int quantity;
+
+  SetQuantityProductEvent({
+    @required this.index,
+    @required this.quantity,
+  });
+
+  @override
+  List<Object> get props => [index, quantity];
+}
+
+class DeleteProductEvent extends CartEvent {
+  final int index;
+
+  DeleteProductEvent({
+    @required this.index,
+  });
+
+  @override
+  List<Object> get props => [index];
+}
